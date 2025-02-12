@@ -14,6 +14,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import org.jetbrains.annotations.Nullable;
 
+import static java.lang.Integer.parseInt;
+
 public class RegistrationController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -84,18 +86,30 @@ public class RegistrationController {
     }
 
     private void incorrectAge(String title, String message) {
-        if (Integer.valueOf(ageUser.getText().trim()) instanceof Integer) {
-            showAlert("Ошибка", "Возраст должен быть числом!");
-        }
+        Integer.valueOf(ageUser.getText().trim());
+        showAlert("Ошибка", "Возраст должен быть числом!");
     }
 
     private void handleRegistration() {
         // Получаем значения из полей
         String firstNameValue = firstName.getText().trim();
         String lastNameValue = lastName.getText().trim();
+
         String ageValueString = ageUser.getText().trim();
-        
-        Integer ageValue = Integer.valueOf(ageUser.getText().trim());
+//
+//        if (!ageUser.getText().trim().isEmpty()) {
+//            ageValueString = "0";
+//        }
+        int ageValue;
+
+        try {
+        ageValue = ageValueString.isEmpty() ? 0 : parseInt(ageUser.getText().trim()); // Пробуем преобразовать строку в целое число
+        } catch (NumberFormatException e) {
+            showAlert("Ошибка","Пожалуйста, введите корректное число");
+            return;
+        }
+
+
         String loginValue = loginUser.getText().trim();
         String passwordValue = passwordUser.getText().trim();
         String repeatPasswordValue = repeatPassUser.getText().trim();
@@ -103,6 +117,36 @@ public class RegistrationController {
 
         // Хеширование пароля
         String hashedPassword = hashPassword(passwordValue);
+
+        // Валидация полей
+        if (firstNameValue.isEmpty() || lastNameValue.isEmpty() || ageValueString.isEmpty() ||
+                loginValue.isEmpty() || passwordValue.isEmpty() || repeatPasswordValue.isEmpty() ||
+                emailValue.isEmpty()) {
+            showAlert("Ошибка", "Все поля должны быть заполнены!");
+            return;
+        }
+
+        int age;
+        try {
+            age = ageValue;
+            if (age < 13) {
+                showAlert("Ошибка", "Возраст должен быть не менее 13 лет!");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Ошибка", "Некорректный формат возраста!");
+            return;
+        }
+
+        if (!isValidEmail(emailValue)) {
+            showAlert("Ошибка", "Некорректный формат email!");
+            return;
+        }
+
+        if (!passwordValue.equals(repeatPasswordValue)) {
+            showAlert("Ошибка", "Пароли не совпадают!");
+            return;
+        }
 
         // Создание подключения
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
@@ -139,36 +183,6 @@ public class RegistrationController {
             showAlert("Database Error", "Ошибка при регистрации: " + e.getMessage());
         }
 
-
-        // Валидация полей
-        if (firstNameValue.isEmpty() || lastNameValue.isEmpty() || ageValueString.isEmpty() ||
-                loginValue.isEmpty() || passwordValue.isEmpty() || repeatPasswordValue.isEmpty() ||
-                emailValue.isEmpty()) {
-            showAlert("Ошибка", "Все поля должны быть заполнены!");
-            return;
-        }
-
-        if (!passwordValue.equals(repeatPasswordValue)) {
-            showAlert("Ошибка", "Пароли не совпадают!");
-            return;
-        }
-
-        int age;
-        try {
-            age = ageValue;
-            if (age < 13) {
-                showAlert("Ошибка", "Возраст должен быть не менее 13 лет!");
-                return;
-            }
-        } catch (NumberFormatException e) {
-            showAlert("Ошибка", "Некорректный формат возраста!");
-            return;
-        }
-
-        if (!isValidEmail(emailValue)) {
-            showAlert("Ошибка", "Некорректный формат email!");
-            return;
-        }
 
         // Создание нового пользователя
         User newUser = new User(
