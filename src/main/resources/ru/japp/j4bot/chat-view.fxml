@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ru.japp.j4bot.ChatController"
+            prefHeight="400.0" prefWidth="600.0">
+
+</AnchorPane>
+
+        <!-- chat-view.fxml -->
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ru.japp.j4bot.ChatController"
+      spacing="10"
+      prefWidth="400"
+      prefHeight="500">
+
+<TextArea fx:id="chatArea" editable="false" wrapText="true" prefHeight="400"/>
+<HBox spacing="10">
+    <TextField fx:id="messageField" promptText="Введите сообщение..." HBox.hgrow="ALWAYS"/>
+    <Button text="Отправить" onAction="#handleSendMessage"/>
+</HBox>
+
+</VBox>
