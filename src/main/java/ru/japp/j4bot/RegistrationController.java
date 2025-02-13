@@ -12,7 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
-import org.jetbrains.annotations.Nullable;
+import ru.japp.j4bot.model.User;
 
 import static java.lang.Integer.parseInt;
 
@@ -66,9 +66,6 @@ public class RegistrationController {
     // В RegistrationController и MainController при изменении аватара
     //String avatarPath = user.setAvatarPath(avatarPath); // путь к изображению
 
-    private @Nullable String getString() {
-        return user.setAvatarPath(avatarPath);
-    } // путь к изображению
 
 // Обновите запись в базе данных
 
@@ -175,7 +172,7 @@ public class RegistrationController {
 
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows > 0) {
-                    showAlert("Успех", "Регистрация прошла успешно!");
+//                    showAlert("Успех", "Регистрация прошла успешно!");
                     clearFields();
                 }
             }
@@ -183,16 +180,8 @@ public class RegistrationController {
             showAlert("Database Error", "Ошибка при регистрации: " + e.getMessage());
         }
 
-
         // Создание нового пользователя
-        User newUser = new User(
-                firstNameValue,
-                lastNameValue,
-                age,
-                loginValue,
-                passwordValue,
-                emailValue
-        );
+        User newUser = new User(firstNameValue, lastNameValue, ageValue, loginValue, passwordValue, emailValue);
 
         // Проверка уникальности логина
         if (isLoginExists(loginValue)) {
@@ -269,31 +258,32 @@ public class RegistrationController {
         email.clear();
     }
 
-    // Внутренний класс пользователя
-    private static class User {
-        private final String firstName;
-        private final String lastName;
-        private final int age;
-        private final String login;
-        private final String password;
-        private final String email;
-
-        public User(String firstName, String lastName, int age, String login, String password, String email) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.age = age;
-            this.login = login;
-            this.password = password;
-            this.email = email;
-        }
-
-        public String getLogin() {
-            return login;
-        }
-
-        public String setAvatarPath(String avatarPath) {
-            return null;
-        }
-        
-    }
+//    // Внутренний класс пользователя
+//    private static class User {
+//        private final String firstName;
+//        private final String lastName;
+//        private final int age;
+//        private final String login;
+//        private final String password;
+//        private final String email;
+//
+//
+//        public User(String firstName, String lastName, int age, String login, String password, String email) {
+//            this.firstName = firstName;
+//            this.lastName = lastName;
+//            this.age = age;
+//            this.login = login;
+//            this.password = password;
+//            this.email = email;
+//        }
+//
+//        public String getLogin() {
+//            return login;
+//        }
+//
+//        public String setAvatarPath(String avatarPath) {
+//            return null;
+//        }
+//
+//    }
 }

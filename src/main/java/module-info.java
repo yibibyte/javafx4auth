@@ -16,4 +16,6 @@ module ru.japp.j4bot {
 
     opens ru.japp.j4bot to javafx.fxml;
     exports ru.japp.j4bot;
+    exports ru.japp.j4bot.model;
+    opens ru.japp.j4bot.model to javafx.fxml;
 }

@@ -2,7 +2,7 @@
 -- Please log an issue at https://github.com/pgadmin-org/pgadmin4/issues/new/choose if you find any bugs, including reproduction steps.
 BEGIN;
 
-CREATE TABLE IF NOT EXISTS PUBLIC.USERS3 (
+CREATE TABLE IF NOT EXISTS PUBLIC.USERS (
 	ID SERIAL NOT NULL,
 	FIRST_NAME CHARACTER VARYING(50) COLLATE PG_CATALOG."default" NOT NULL,
 	LAST_NAME CHARACTER VARYING(50) COLLATE PG_CATALOG."default" NOT NULL,

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ru.japp.j4bot.model.User;
 
 // MainApp.java
 public class MainApp extends Application {

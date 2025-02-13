@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import ru.japp.j4bot.model.User;
 
 import java.io.File;
 
